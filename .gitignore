@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.p~ 
+*.swp
+
+# Django
+*.log
+log.txt
+*.pot
+*.pyc
+*.mo
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+.env
+.env.*
+
+# Migrations
+**/migrations/
+!**/migrations/__init__.py
+
+# VSCode
+.vscode/
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# Coverage and test reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+test-results/
+
+
+# Others
+*.sqlite3
+

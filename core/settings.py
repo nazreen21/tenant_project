@@ -59,8 +59,7 @@ PROJECT_APPS = [
 # Third-party apps
 THIRD_PARTY_APPS = [
     'rest_framework', # Django REST framework
-    'rest_framework_simplejwt', # Simple JWT for token authentication
-    # 'rest_framework_simplejwt.token_blacklist', # Token blacklist for JWT
+    'rest_framework_simplejwt' # Simple JWT for token authentication
 ]
 
 INSTALLED_APPS = INBUILT_APPS + PROJECT_APPS + THIRD_PARTY_APPS

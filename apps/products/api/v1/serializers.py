@@ -22,6 +22,14 @@ class ProductCreateSerializer(serializers.ModelSerializer):
 
         user = self.context["request"].user
 
+        # Ensure user is staff
+        if user.role != UserRole.STAFF:
+            raise serializers.ValidationError("Only staff can create products.")
+        
+        # Ensure staff has company
+        if not user.company:
+            raise serializers.ValidationError("Staff must belong to a company to create products.")
+
         return Product.objects.create(
             tenant=user.tenant,
             company=user.company,

@@ -45,6 +45,10 @@ class ProductViewSet(ModelViewSet):
         return ProductListSerializer
 
     def perform_create(self, serializer):
+        # Only staff can create products
+        if self.request.user.role != UserRole.STAFF:
+            raise PermissionDenied("Only staff can create products.")
+        
         serializer.save()
 
     def perform_update(self, serializer):

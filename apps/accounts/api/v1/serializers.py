@@ -110,7 +110,7 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
         reset.save()
 
         return {
-            "detail": "Password updated successfully."
+            "detail": "Password updated."
         }
     
 # Staff serializer

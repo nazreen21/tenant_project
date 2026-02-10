@@ -22,6 +22,7 @@ urlpatterns = [
     # Staff #
     path("staff/", StaffView.as_view()),
 
-    # Admin #
+    # Customer list api view - admin#
     path("admin/customers/", CustomerListView.as_view()),
+    
 ]

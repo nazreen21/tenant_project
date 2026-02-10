@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from apps.products.api.v1.views import ProductClaimView, CustomerProductsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +25,7 @@ urlpatterns = [
     path("api/tenant/", include("apps.tenants.api.v1.urls")), # Tenants app
     path("api/invitations/", include("apps.invitations.api.v1.urls")), # Invitations app
     path("api/products/", include("apps.products.api.v1.urls")), # Products app
+    path("api/public/products/claim/", ProductClaimView.as_view()), # Public product claim
+    path("api/admin/customers/<uuid:id>/products/", CustomerProductsView.as_view()), # Admin customer products
 
 ]

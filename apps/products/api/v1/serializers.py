@@ -47,7 +47,7 @@ class ProductListSerializer(serializers.ModelSerializer):
 class ProductClaimSerializer(serializers.Serializer):
     share_token = serializers.CharField()
     email = serializers.EmailField()
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, required=True, allow_blank=False)
 
     def validate(self, attrs):
 
@@ -65,22 +65,22 @@ class ProductClaimSerializer(serializers.Serializer):
 
         product = validated_data["product"]
         email = validated_data["email"]
+        password = validated_data["password"]
 
-        user, created = User.objects.get_or_create(
-            email=email,
-            defaults={
-                "role": UserRole.CUSTOMER,
-                "tenant": product.tenant
-            }
-        )
-
-        if not created:
-            if not user.check_password(validated_data["password"]):
+        # Check if user already exists
+        try:
+            user = User.objects.get(email=email)
+            # User exists - verify password
+            if not user.check_password(password):
                 raise serializers.ValidationError("Invalid password.")
-        else:
-            user.set_password(validated_data["password"])
-            user.save()
-        
+        except User.DoesNotExist:
+            # User doesn't exist - create new user with password
+            user = User.objects.create_user(
+                email=email,
+                password=password,
+                role=UserRole.CUSTOMER,
+                tenant=product.tenant
+            )
 
         product.customer = user
         product.save()
@@ -88,7 +88,7 @@ class ProductClaimSerializer(serializers.Serializer):
         refresh = RefreshToken.for_user(user)
 
         return {
-            "detail": "Product claimed.",
+            "detail": "Claimed.",
             "access": str(refresh.access_token),
             "refresh": str(refresh),
         }
